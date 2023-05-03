@@ -30,6 +30,6 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
           aws-region: us-east-1
-    - name: Upload zip to lambda functions
+    - name: Upload zip to lambda function
       run: |
           aws lambda update-function-code --function-name mongodb_backup_function --zip-file fileb://lambda_function_new.zip
