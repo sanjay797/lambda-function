@@ -20,7 +20,7 @@ jobs:
     - name: Create deployment package
       run: zip -r lambda_function_new.zip .
     - name: Deploy to Lambda
-      uses: einaregilsson/aws-lambda-deploy@v1
+      uses: appleboy/lambda-action@v0.1.9
       with:
         access_key: ${{ secrets.AWS_ACCESS_KEY }}
         secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
