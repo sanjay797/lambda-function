@@ -8,23 +8,28 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
+
     - name: Install dependencies
       run: pip install -r requirements.txt -t .
+
     - name: Create deployment package
       run: zip -r lambda_function_new.zip .
-    - name: Deploy to Lambda
-      uses: appleboy/lambda-action@v0.1.9
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        access_key: ${{ secrets.AWS_ACCESS_KEY }}
-        secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        function_name: mongodb_backup_function
-        zip_file: lambda_function_new.zip
-        memory_size: 128
-        timeout: 10
+          aws-region: us-east-1
+    - name: Upload zip to lambda function
+      run: |
+          aws lambda update-function-code --function-name mongodb_backup_function --zip-file fileb://lambda_function_new.zip
