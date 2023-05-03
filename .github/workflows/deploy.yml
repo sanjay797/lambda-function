@@ -25,5 +25,6 @@ jobs:
         access_key: ${{ secrets.AWS_ACCESS_KEY }}
         secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         function_name: mongodb_backup_function
-        s3_bucket: mymongodbbackupsanjay
-        filename: lambda_function_new.zip
+        zip_file: lambda_function_new.zip
+        memory_size: 128
+        timeout: 10
