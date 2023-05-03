@@ -17,12 +17,12 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt -t .
     - name: Create deployment package
-      run: zip -r lambda_function.zip .
+      run: zip -r lambda_function_new.zip .
     - name: Deploy to Lambda
       uses: einaregilsson/aws-lambda-deploy@v1
       with:
         access_key: ${{ secrets.AWS_ACCESS_KEY }}
         secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        function_name: <lambda-function-name>
-        s3_bucket: <s3-bucket-name>
-        filename: lambda_function.zip
+        function_name: mongodb_backup_function
+        s3_bucket: mymongodbbackupsanjay
+        filename: lambda_function_new.zip
